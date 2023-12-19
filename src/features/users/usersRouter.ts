@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import db from '../db'
+import db from '../../db'
 import {
   comparePasswordHash,
   createPasswordHash,
@@ -7,8 +7,8 @@ import {
   isSelf,
   setToken,
   verifyToken,
-} from '../auth'
-import { querySchema } from '../lib/genericValidators'
+} from '../../lib/auth'
+import { querySchema } from '../../lib/genericValidators'
 import {
   credentialsSchema,
   userCreateSchema,
