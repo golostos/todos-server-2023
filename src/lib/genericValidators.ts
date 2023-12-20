@@ -14,3 +14,5 @@ export const querySchema = z.object({
     )
     .optional(),
 })
+
+export const uuidSchema = z.string().uuid()

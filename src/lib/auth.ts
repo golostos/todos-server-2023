@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import { uuidSchema } from './genericValidators'
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
-  const token = req.cookies.token
+  const token = req.cookies?.token
+  console.log(token)
   if (typeof token === 'string') {
     // bearerToken = 'Bearer ' + token
     const bearerToken = token.split(' ')[1]
@@ -50,12 +52,9 @@ export function isAdmin(req: Request, res: Response, next: NextFunction) {
   next()
 }
 
-export function isSelf(req: Request, res: Response, next: NextFunction) {
-  const id = req.params.id
-  if (typeof id !== 'string') {
-    return res.sendStatus(400)
-  }
-  if (req.body.user.id !== id && req.body.user.role !== 'ADMIN') {
+export async function isSelf(req: Request, res: Response, next: NextFunction) {
+  const id = await uuidSchema.parseAsync(req.params.id)
+  if (req.body?.user?.id !== id && req.body?.user?.role !== 'ADMIN') {
     return res.sendStatus(403)
   }
   next()

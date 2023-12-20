@@ -8,7 +8,7 @@ import {
   setToken,
   verifyToken,
 } from '../../lib/auth'
-import { querySchema } from '../../lib/genericValidators'
+import { querySchema, uuidSchema } from '../../lib/genericValidators'
 import {
   credentialsSchema,
   userCreateSchema,
@@ -28,7 +28,7 @@ usersRouter.get('/', verifyToken, isAdmin, async (req, res) => {
 })
 
 usersRouter.get('/:id', verifyToken, isSelf, async (req, res) => {
-  const id = req.params.id
+  const id = await uuidSchema.parseAsync(req.params.id)
   const user = await db.user.findUnique({
     where: {
       id,
@@ -51,7 +51,7 @@ usersRouter.post('/', verifyToken, isAdmin, async (req, res) => {
 })
 
 usersRouter.patch('/:id', verifyToken, isSelf, async (req, res) => {
-  const id = req.params.id
+  const id = await uuidSchema.parseAsync(req.params.id)
   const { email, password, role } = await userUpdateSchema.parseAsync(req.body)
   const updatedData: Prisma.UserUpdateInput = {}
   if (email) updatedData.email = email
@@ -69,7 +69,7 @@ usersRouter.patch('/:id', verifyToken, isSelf, async (req, res) => {
 })
 
 usersRouter.delete('/:id', verifyToken, isSelf, async (req, res) => {
-  const id = req.params.id
+  const id = await uuidSchema.parseAsync(req.params.id)
   await db.user.delete({
     where: {
       id,

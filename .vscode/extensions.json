@@ -1,6 +1,11 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "prisma.prisma",
+    "ms-azuretools.vscode-docker",
+    "mikestead.dotenv",
+    "orta.vscode-jest",
+    "humao.rest-client"
   ]
 }

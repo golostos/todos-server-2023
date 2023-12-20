@@ -7,6 +7,12 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+    jest: true,
+  },
   root: true,
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
@@ -16,5 +22,6 @@ module.exports = {
     ],
     'no-unused-vars': 'off',
     'prettier/prettier': 'warn',
+    'no-undef': 'error',
   },
 }
