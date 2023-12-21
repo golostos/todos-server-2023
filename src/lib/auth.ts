@@ -4,6 +4,7 @@ import { uuidSchema } from './genericValidators'
 import createHttpError from 'http-errors'
 import { RequestUser } from './types'
 import jwt, { jwtVerify } from './jwt'
+import db from '@/db'
 
 export async function verifyToken(
   req: RequestUser,
@@ -48,6 +49,7 @@ export function setToken(res: Response, data: object) {
   res.cookie('token', `Bearer ${token}`, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24,
+    secure: process.env.NODE_ENV === 'production',
   })
   res.sendStatus(200)
 }
@@ -71,6 +73,27 @@ export async function isSelf(
     throw new createHttpError.Forbidden()
   }
   next()
+}
+
+export async function isSelfTodo(
+  req: RequestUser,
+  res: Response,
+  next: NextFunction,
+) {
+  if (req.body?.user?.role === 'ADMIN') {
+    return next()
+  }
+  const id = await uuidSchema.parseAsync(req.params.id)
+  const userId = req.body.user?.id
+  const todo = await db.todo.findMany({
+    where: {
+      userId,
+      id,
+    },
+  })
+  if (todo) return next()
+  // return res.sendStatus(403)
+  throw new createHttpError.Forbidden()
 }
 
 export function createPasswordHash(password: string) {

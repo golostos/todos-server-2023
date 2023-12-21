@@ -39,13 +39,22 @@ usersRouter.get('/:id', verifyToken, isSelf, async (req, res) => {
 })
 
 usersRouter.post('/', verifyToken, isAdmin, async (req, res) => {
-  const { email, password, role } = await userCreateSchema.parseAsync(req.body)
+  const { email, password, role, name } = await userCreateSchema.parseAsync(
+    req.body,
+  )
   const passHash = await createPasswordHash(password)
   const user = await db.user.create({
     data: {
       email,
       password: passHash,
       role,
+      name,
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      name: true,
     },
   })
   res.json(user)
@@ -53,13 +62,16 @@ usersRouter.post('/', verifyToken, isAdmin, async (req, res) => {
 
 usersRouter.patch('/:id', verifyToken, isSelf, async (req, res) => {
   const id = await uuidSchema.parseAsync(req.params.id)
-  const { email, password, role } = await userUpdateSchema.parseAsync(req.body)
+  const { email, password, role, name } = await userUpdateSchema.parseAsync(
+    req.body,
+  )
   const updatedData: Prisma.UserUpdateInput = {}
   if (email) updatedData.email = email
   if (password) updatedData.password = await createPasswordHash(password)
   if (role && req.body.user.role === 'ADMIN') {
     updatedData.role = role
   }
+  if (name) updatedData.name = name
   const user = await db.user.update({
     where: {
       id,

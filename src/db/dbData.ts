@@ -2,6 +2,12 @@ import bcrypt from 'bcrypt'
 import { userIds, todoIds } from './seedIds'
 import db from '.'
 
+// ACID t-sql
+// Atomicity: all or nothing
+// Consistency: data is valid
+// Isolation: concurrent transactions don't interfere
+// Durability: data persists
+
 export async function seed() {
   const users = db.user.createMany({
     data: [
