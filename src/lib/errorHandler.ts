@@ -13,7 +13,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
   }
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     if (err.code === 'P2002') {
-      return res.status(400).json({
+      return res.status(409).json({
         message: `This ${
           Array.isArray(err.meta?.target) ? err.meta.target.join(', ') : 'field'
         } is already taken`,
