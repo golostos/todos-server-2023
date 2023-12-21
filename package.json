@@ -11,7 +11,7 @@
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
     "db:migrate:prod": "prisma migrate deploy",
-    "db:seed": "tsx ./src/db/seed.ts",
+    "db:seed": "tsx ./prisma/seed/seed.ts",
     "lint": "eslint '*/**/*.{js,ts}' --quiet --fix",
     "test": "jest",
     "test:integration": "bash ./scripts/test-integration.sh"

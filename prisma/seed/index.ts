@@ -1,6 +1,6 @@
 import { userIds, todoIds } from './seedIds'
-import db from '.'
-import { createPasswordHash } from '@/auth/password'
+import db from '../../src/db'
+import { createPasswordHash } from '../../src/auth'
 
 // ACID t-sql
 // Atomicity: all or nothing
@@ -9,6 +9,7 @@ import { createPasswordHash } from '@/auth/password'
 // Durability: data persists
 
 export async function seed() {
+  await clear()
   const users = db.user.createMany({
     data: [
       {

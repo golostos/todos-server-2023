@@ -12,7 +12,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "__tests__/users.test.ts"
+    "__tests__/users.test.ts",
   ],
   "exclude": [
     "node_modules",
