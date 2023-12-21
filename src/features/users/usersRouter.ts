@@ -1,13 +1,7 @@
 import { Router } from 'express'
 import db from '@/db'
-import {
-  comparePasswordHash,
-  createPasswordHash,
-  isAdmin,
-  isSelf,
-  setToken,
-  verifyToken,
-} from '@/lib/auth'
+import { isAdmin, isSelf, setToken, verifyToken } from '@/lib/auth'
+import { comparePasswordHash, createPasswordHash } from '@/lib/password'
 import { querySchema, uuidSchema } from '@/lib/genericValidators'
 import {
   credentialsSchema,

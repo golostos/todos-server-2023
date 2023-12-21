@@ -1,6 +1,6 @@
 import { userIds, todoIds } from './seedIds'
 import db from '.'
-import { createPasswordHash } from '@/lib/auth'
+import { createPasswordHash } from '@/lib/password'
 
 // ACID t-sql
 // Atomicity: all or nothing
