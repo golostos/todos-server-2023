@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import db from '@/db'
 import { querySchema } from '@/lib/genericValidators'
-import { verifyToken } from '@/lib/auth'
+import { verifyToken } from '@/auth'
 import { todoCreateSchema } from './todosValidators'
 
 const todosRouter = Router()

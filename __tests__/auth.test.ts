@@ -3,7 +3,7 @@ import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
-import { verifyToken, isSelf } from '@/lib/auth'
+import { verifyToken, isSelf } from '@/auth'
 import cookieParser from 'cookie-parser'
 import errorHandler from '@/lib/errorHandler'
 

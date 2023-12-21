@@ -3,7 +3,7 @@ import { app } from '@/app'
 import { seed, clear } from '@/db/dbData'
 import request from 'supertest'
 import { parse } from 'cookie'
-import { jwtVerify } from '@/lib/jwt'
+import { jwtVerify } from '@/auth'
 
 describe('users', () => {
   let userCookie: Record<string, string> = { token: '' }

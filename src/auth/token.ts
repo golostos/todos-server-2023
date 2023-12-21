@@ -1,9 +1,7 @@
 import { NextFunction, Response } from 'express'
-import { uuidSchema } from './genericValidators'
 import createHttpError from 'http-errors'
-import { RequestUser } from './types'
+import { RequestUser } from '../lib/types'
 import jwt, { jwtVerify } from './jwt'
-import db from '@/db'
 
 export async function verifyToken(
   req: RequestUser,
@@ -59,38 +57,4 @@ export function isAdmin(req: RequestUser, res: Response, next: NextFunction) {
     throw new createHttpError.Forbidden()
   }
   next()
-}
-
-export async function isSelf(
-  req: RequestUser,
-  res: Response,
-  next: NextFunction,
-) {
-  const id = await uuidSchema.parseAsync(req.params.id)
-  if (req.body?.user?.id !== id && req.body?.user?.role !== 'ADMIN') {
-    // return res.sendStatus(403)
-    throw new createHttpError.Forbidden()
-  }
-  next()
-}
-
-export async function isSelfTodo(
-  req: RequestUser,
-  res: Response,
-  next: NextFunction,
-) {
-  if (req.body?.user?.role === 'ADMIN') {
-    return next()
-  }
-  const id = await uuidSchema.parseAsync(req.params.id)
-  const userId = req.body.user?.id
-  const todo = await db.todo.findMany({
-    where: {
-      userId,
-      id,
-    },
-  })
-  if (todo) return next()
-  // return res.sendStatus(403)
-  throw new createHttpError.Forbidden()
 }
