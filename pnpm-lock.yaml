@@ -46,6 +46,9 @@ devDependencies:
   '@types/express':
     specifier: ^4.17.21
     version: 4.17.21
+  '@types/express-serve-static-core':
+    specifier: ^4.17.41
+    version: 4.17.41
   '@types/http-errors':
     specifier: ^2.0.4
     version: 2.0.4
@@ -70,6 +73,9 @@ devDependencies:
   dotenv-cli:
     specifier: ^7.3.0
     version: 7.3.0
+  dotenv-expand:
+    specifier: ^10.0.0
+    version: 10.0.0
   eslint:
     specifier: ^8.56.0
     version: 8.56.0

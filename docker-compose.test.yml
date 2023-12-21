@@ -1,4 +1,7 @@
 version: '3.8'
+
+name: todos-test
+
 services:
   db:
     image: postgres

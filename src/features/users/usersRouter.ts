@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import db from '../../db'
+import db from '@/db'
 import {
   comparePasswordHash,
   createPasswordHash,
@@ -7,14 +7,15 @@ import {
   isSelf,
   setToken,
   verifyToken,
-} from '../../lib/auth'
-import { querySchema, uuidSchema } from '../../lib/genericValidators'
+} from '@/lib/auth'
+import { querySchema, uuidSchema } from '@/lib/genericValidators'
 import {
   credentialsSchema,
   userCreateSchema,
   userUpdateSchema,
 } from './usersValidators'
 import { Prisma } from '@prisma/client'
+import createHttpError from 'http-errors'
 
 const usersRouter = Router()
 
@@ -79,18 +80,18 @@ usersRouter.delete('/:id', verifyToken, isSelf, async (req, res) => {
 })
 
 usersRouter.post('/login', async (req, res) => {
-  const { email, password } = await userCreateSchema.parseAsync(req.body)
+  const { email, password } = await credentialsSchema.parseAsync(req.body)
   const user = await db.user.findUnique({
     where: {
       email,
     },
   })
   if (!user) {
-    return res.sendStatus(403)
+    throw new createHttpError.Unauthorized()
   }
   const isPasswordValid = await comparePasswordHash(password, user.password)
   if (!isPasswordValid) {
-    return res.sendStatus(403)
+    throw new createHttpError.Unauthorized()
   }
   setToken(res, {
     id: user.id,

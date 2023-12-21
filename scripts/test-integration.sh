@@ -12,15 +12,19 @@ else
   echo "todos-postgres-test container is already running"
 fi
 
-echo "${DATABASE_URL}"
-
 # Run wait-for-it
-bash ./wait-for-it.sh "${DATABASE_URL}"
+bash $DIR/wait-for-it.sh -h "${POSTGRES_HOST}" -p "${POSTGRES_PORT}"
+
+# Interupt if wait-for-it failed
+if [ $? -ne 0 ]; then
+  echo "wait-for-it failed"
+  exit 1
+fi
 
 # Run migrations
-pnpx dotenv -e .env.test -- pnpx prisma migrate dev --name init
+pnpm dotenv -e .env.test -- pnpm prisma migrate dev --name init
 
 echo "Successfully migrated database"
 
 # Run jest
-pnpx dotenv -e .env.test -- pnpx jest
+pnpm dotenv -e .env.test -- pnpm jest

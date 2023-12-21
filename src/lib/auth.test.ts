@@ -1,11 +1,11 @@
-import 'dotenv/config'
+import '@/lib/initTestsEnv'
+import express, { Request, Response, NextFunction } from 'express'
+import 'express-async-errors'
 import request from 'supertest'
-import express, { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { verifyToken, isSelf } from './auth'
 import cookieParser from 'cookie-parser'
 import errorHandler from './errorHandler'
-import { NextFunction } from 'express'
 
 describe('verifyToken', () => {
   const app = express()
@@ -16,16 +16,19 @@ describe('verifyToken', () => {
     app.get('/', (req: Request, res: Response) => {
       res.json(req.body.user)
     })
+    app.use(errorHandler)
   })
 
-  it('should return 403 if no token is provided', async () => {
+  it('should return 401 if no token is provided', async () => {
     const res = await request(app).get('/')
-    expect(res.statusCode).toEqual(403)
+    expect(res.statusCode).toEqual(401)
   })
 
-  it('should return 403 if the token is invalid', async () => {
-    const res = await request(app).get('/').set('Cookie', ['token=invalid'])
-    expect(res.statusCode).toEqual(403)
+  it('should return 401 if the token is invalid', async () => {
+    const res = await request(app)
+      .get('/')
+      .set('Cookie', ['token=invalid token'])
+    expect(res.statusCode).toEqual(401)
   })
 
   it('should call next if the token is valid', async () => {
