@@ -1,6 +1,6 @@
-import bcrypt from 'bcrypt'
 import { userIds, todoIds } from './seedIds'
 import db from '.'
+import { createPasswordHash } from '@/lib/auth'
 
 // ACID t-sql
 // Atomicity: all or nothing
@@ -15,20 +15,20 @@ export async function seed() {
         id: userIds[0],
         email: 'test1@mail.ru',
         name: 'Admin',
-        password: bcrypt.hashSync('admin123', 10),
+        password: await createPasswordHash('admin123'),
         role: 'ADMIN',
       },
       {
         id: userIds[1],
         email: 'test2@mail.ru',
         name: 'User1',
-        password: bcrypt.hashSync('user123', 10),
+        password: await createPasswordHash('user123'),
       },
       {
         id: userIds[2],
         email: 'test3@mail.ru',
         name: 'User2',
-        password: bcrypt.hashSync('user123', 10),
+        password: await createPasswordHash('user123'),
       },
     ],
   })

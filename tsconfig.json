@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "./src", /* Specify the root folder within your source files. */
     "outDir": "./dist", /* Specify an output folder for all emitted files. */
-    "baseUrl": ".", /* Base directory to resolve non-absolute module names. */
+    "baseUrl": ".", /* Specify the base directory to resolve non-relative module names. */
     "paths": {
       "@/*": [
         "src/*"
@@ -11,8 +11,9 @@
     },
   },
   "include": [
-    "src/**/*.ts"
-, "__tests__/users.test.ts"  ],
+    "src/**/*.ts",
+    "__tests__/users.test.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist",

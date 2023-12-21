@@ -1,5 +1,6 @@
 import { NextFunction, Response } from 'express'
-import bcrypt from 'bcrypt'
+import { scrypt as scryptCallback, randomBytes } from 'node:crypto'
+import { promisify } from 'node:util'
 import { uuidSchema } from './genericValidators'
 import createHttpError from 'http-errors'
 import { RequestUser } from './types'
@@ -96,10 +97,18 @@ export async function isSelfTodo(
   throw new createHttpError.Forbidden()
 }
 
-export function createPasswordHash(password: string) {
-  return bcrypt.hash(password, 10)
+const scrypt = promisify<string, string, number, Buffer>(scryptCallback)
+
+export async function createPasswordHash(password: string) {
+  // return bcrypt.hash(password, 10)
+  const salt = randomBytes(16).toString('hex')
+  const hash = await scrypt(password, salt, 32)
+  return `${hash.toString('hex')}.${salt}`
 }
 
-export function comparePasswordHash(password: string, hash: string) {
-  return bcrypt.compare(password, hash)
+export async function comparePasswordHash(password: string, hash: string) {
+  // return bcrypt.compare(password, hash)
+  const [hashedPassword, salt] = hash.split('.')
+  const newHash = await scrypt(password, salt, 32)
+  return hashedPassword === newHash.toString('hex')
 }

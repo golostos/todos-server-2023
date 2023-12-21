@@ -1,8 +1,7 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true, // Prevent files from being emitted
-    "baseUrl": ".", /* Base directory to resolve non-absolute module names. */
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "../src/*"
@@ -10,6 +9,6 @@
     },
   },
   "include": [
-    "./**/*.ts" // Include all TypeScript files in '__tests__' directory
+    "./**/*.ts", // Include all TypeScript files in '__tests__' directory
   ]
 }
