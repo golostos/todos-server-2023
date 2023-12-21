@@ -4,7 +4,7 @@ import { HttpError } from 'http-errors'
 import { ZodError } from 'zod'
 
 const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
-  console.error(err?.message)
+  console.error('\x1b[31m%s\x1b[0m', err?.message)
   if (err instanceof ZodError) {
     return res.status(400).json({ message: err.message })
   }

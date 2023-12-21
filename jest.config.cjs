@@ -7,4 +7,6 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  // use __tests__ folder for tests
+  testMatch: ['**/__tests__/**/*.test.ts'],
 }

@@ -3,9 +3,9 @@ import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
-import { verifyToken, isSelf } from './auth'
+import { verifyToken, isSelf } from '@/lib/auth'
 import cookieParser from 'cookie-parser'
-import errorHandler from './errorHandler'
+import errorHandler from '@/lib/errorHandler'
 
 describe('verifyToken', () => {
   const app = express()
