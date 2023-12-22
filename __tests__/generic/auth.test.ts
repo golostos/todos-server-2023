@@ -1,4 +1,4 @@
-import '@/lib/initTestsEnv'
+// import '../initTestsEnv'
 import express, { Request, Response, NextFunction } from 'express'
 import 'express-async-errors'
 import request from 'supertest'

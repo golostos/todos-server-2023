@@ -1,10 +1,10 @@
-import '@/lib/initTestsEnv'
+import '../initTestsEnv'
 import { app } from '@/app'
 import request from 'supertest'
 import { parse } from 'cookie'
 import { jwtVerify } from '@/auth'
-import { clear, seed } from '../prisma/seed'
-import { userIds } from '../prisma/seed/seedIds'
+import { clear, seed } from '@db/seed'
+import { userIds } from '@db/seed/seedIds'
 
 describe('users', () => {
   let userCookie: Record<string, string> = { token: '' }

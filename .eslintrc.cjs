@@ -24,4 +24,5 @@ module.exports = {
     'prettier/prettier': 'warn',
     'no-undef': 'error',
   },
+  ignorePatterns: ['dist/'],
 }
