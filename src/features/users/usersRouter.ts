@@ -24,6 +24,12 @@ usersRouter.get('/', verifyToken, isAdmin, async (req, res) => {
   const users = await db.user.findMany({
     take: limit,
     skip: offset,
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      name: true,
+    },
   })
   res.json(users)
 })
@@ -33,6 +39,12 @@ usersRouter.get('/:id', verifyToken, isSelf, async (req, res) => {
   const user = await db.user.findUnique({
     where: {
       id,
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      name: true,
     },
   })
   res.json(user)
@@ -77,6 +89,12 @@ usersRouter.patch('/:id', verifyToken, isSelf, async (req, res) => {
       id,
     },
     data: updatedData,
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      name: true,
+    },
   })
   res.json(user)
 })

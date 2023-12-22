@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a simple todo list server app. It is written in Node.js and uses Express.js as a web framework. It uses Prisma as a ORM.
+This is a simple todo list server API. It is written in Node.js and uses Express.js as a web framework. It uses Prisma as an ORM.
 
 ## Installation
 
@@ -27,3 +27,7 @@ This is a simple todo list server app. It is written in Node.js and uses Express
 ### Run the app
 
 `$ pnpm dev`
+
+## Run tests
+
+`$ pnpm test:integration`
